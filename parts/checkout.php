@@ -91,8 +91,8 @@ $patronLoans = $patronLoans["loans"];
   						</tr>
   					</thead>
   					<?php
-  					
-  					foreach ($patronLoans['loan'] as $loan) {
+  					if ($patronLoans['loan']['cardnumber'] == $_SESSION['patronCard']) {
+  					foreach ($patronLoans as $loan) {
   						$itemBarcode = $loan['barcode'];
   						$itemTitle = $loan['title'];
   						$itemDue = strtok($loan['date_due'],' ');
@@ -108,7 +108,25 @@ $patronLoans = $patronLoans["loans"];
 
 END;
   					}
-  				
+  				}
+  				else {
+  						foreach ($patronLoans['loan'] as $loan) {
+  						$itemBarcode = $loan['barcode'];
+  						$itemTitle = $loan['title'];
+  						$itemDue = strtok($loan['date_due'],' ');
+  						$itemAuthor = $loan['author'];
+  						echo  <<<END
+  						<tr>
+  							<td>$itemTitle</td>
+  							<td>$itemAuthor</td>
+  							<td>$itemBarcode</td>
+  							<td>$itemDue</td>
+  							<td><button type="submit" value=class="btn btn-primary">Renew</button></td>
+  						</tr>
+
+END;
+  					}
+  				}
   				
   					?>
 				</table>

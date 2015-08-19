@@ -1,4 +1,4 @@
-<?php
+<?php 
 $sipHost ="127.0.0.1";
 $sipPort = "6001";
 $sipUser = "koha-sc";
@@ -7,3 +7,6 @@ $maxFine = 5;
 //OPAC URL with out the forward slash
 $opacURL = "http://ils-opac-warrior";
 $adminURL = "https://admin.ils.cucawarriors.com";
+$libraryName = "Childs Family Library";
+$subName = "at Charlotte United Christian Academy";
+$webAddress = "https://opac.ils.cucawarriors.com";

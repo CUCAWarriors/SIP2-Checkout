@@ -10,9 +10,13 @@ $page = $_SESSION['page'];
 else
 $page = "start";
 //For big mistakes
-#session_destroy();
-    
 
+#session_destroy();
+ if (isset($_GET['killsession']))   
+{
+	session_destroy();
+	header("Location: index.php");
+}
 
 if ($page == 'start') 
 include ("parts/start.php");
@@ -20,7 +24,8 @@ elseif ($page == "process" )
 include ("parts/process.php");
 elseif ($page == "checkout" )
 include ("parts/checkout.php");
-
+elseif ($page == "reciept" )
+include ("parts/reciept.php");
 
 
 include("parts/footer.php");

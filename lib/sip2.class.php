@@ -83,7 +83,7 @@ class sip2 {
     public $scLocation   = '';  /* Location Code */
 
     /* Debug */
-    public $debug        = false;
+    public $debug        = true;
     
     /* Private variables for building messages */
     public $AO = 'WohlersSIP';
