@@ -1,0 +1,28 @@
+ if (!$result) {
+        $msg->add('d', 'There was an issue connecting, please contact the ILS Administrator');
+        header("Location: /");
+    }
+    //Connection Successful!
+    elseif ($result) {
+        $station_checkin = $sip->msgSCStatus();
+        $conn_info = $sip->parseACSStatusResponse($sip->get_message($in));
+        
+        //Set AO and AN fields
+        if (isset($conn_info['variable']['AO'][0]) AND isset($conn_info['variable']['AN'][0])){
+            $sip->AO = $conn_info['variable']['AO'][0]; /* set AO to value returned */
+            $sip->AN = $conn_info['variable']['AN'][0]; /* set AN to value returned */
+
+        }
+        //Unable to set/retrieve AO and AN fields
+        else {
+            $msg->add('d', 'There was an issue, please contact the ILS Administrator<br />INFO: Could not set branch infomation');
+            header("Location: /");
+        }
+     
+        
+        
+    }// elseif($result)
+    else {
+         $msg->add('d', 'There was an unknown error, please contact the ILS Administrator');
+        header("Location: /");
+    }
