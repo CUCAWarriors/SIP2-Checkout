@@ -17,8 +17,7 @@ if (isset($_POST["patronid"])) {
       if (isset($patronInfo["debarred"]))
       {
          $msg->add('d', "There is a restriction on your account preventing you from checking out books, please see the Circulation Desk to remove the restriction");
-                    $_SESSION['page'] = 'start';
-                    header("Location: /");
+                    $_SESSION["patronDebarred"] = true;
       }
       
       if ($patronInfo["charges"] > 0) {
@@ -27,8 +26,7 @@ if (isset($_POST["patronid"])) {
           if ($patronInfo["charges"] >= $maxFine)
             {
                  $msg->add('d', "You owe $$owes and cannot checkout books, please see the Circulation Desk for more infomation and to pay your fine");
-                    $_SESSION['page'] = 'start';
-                    header("Location: /");
+                  
                 
             } // if ($patronInfo["charges"] >= $maxFine)
             else {
@@ -39,12 +37,16 @@ if (isset($_POST["patronid"])) {
       } //if ($patronInfo["charges"] > 0)
       $_SESSION['patronName'] =  $patronInfo["firstname"] . ' ' . $patronInfo["surname"];
       $_SESSION['patronID'] = $patronID;
+      $_SESSION['patronCard'] = $cardNum;
       if (isset($owes))
-      $_SESSION['patronFines'] = $owes;
+        $_SESSION['patronFines'] = $owes;
+      else
+        $_SESSION['patronFines'] = 0;
       //set the next page
       $_SESSION['page'] = 'checkout';
+
       #echo 'it worked';
-      header("Location: /");
+      header("Location: index.php");
       
       
       
@@ -59,9 +61,59 @@ if (isset($_POST["patronid"])) {
      $msg->add('d', 'We were unable to find you, please try again');
         $_SESSION['page'] = 'start';
         #var_dump($patronLookup);
-        header("Location: /");
+        header("Location: index.php");
         
    }
-        $_SESSION['page'] = 'start';
+        #$_SESSION['page'] = 'start';
    #echo "sumpin happened!";
+}
+elseif (isset($_POST['cko_action']))
+{
+  $action = $_POST['cko_action'];
+  if ($action == 'finish') {
+      session_destroy();
+      unset($_SESSION);
+      header("Location: index.php");
+
+  }
+  elseif ($action == 'receipt')
+  {
+        $_SESSION['page'] = 'receipt';
+        #var_dump($patronLookup);
+        header("Location: index.php");
+        
+
+  }
+  elseif ($action == 'run_checkout' and isset($_POST['bookBarcode']))
+  {
+    $cko = runCheckout($_SESSION['patronCard'], $_POST['bookBarcode'], $sipHost, $sipPort, $sipUser, $sipPassword);
+    if (!$cko) {
+      $msg->add('d', 'We were unable to checkout your selection, please try again');
+      $_SESSION['page'] = 'checkout';
+      header("Location: index.php");
+    }
+    elseif ($cko)
+      {
+      $msg->add('s', 'Book Checked Out!');
+      $_SESSION['page'] = 'checkout';
+      header("Location: index.php");
+    }
+    else {
+      $msg->add('d', 'We were unable to checkout your selection due to an unknown issue, please try again');
+      $_SESSION['page'] = 'checkout';
+
+    }
+  }
+
+}
+elseif (isset($_SESSION['prev_page']))
+{
+  $_SESSION['page'] = $_SESSION['prev_page'];
+  unset($_SESSION['prev_page']);
+  header("Location: index.php");
+}
+else
+{
+  $_SESSION['page'] = 'start';
+  header("Location: index.php");
 }

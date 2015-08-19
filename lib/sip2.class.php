@@ -468,7 +468,7 @@ return $result;
         'Online'            => substr($response, 2, 1),
         'Checkin'           => substr($response, 3, 1),  /* is Checkin by the SC allowed ?*/
         'Checkout'          => substr($response, 4, 1),  /* is Checkout by the SC allowed ?*/
-      'Renewal'         => substr($response, 5, 1),  /* renewal allowed? */
+        'Renewal'         => substr($response, 5, 1),  /* renewal allowed? */
         'PatronUpdate'      => substr($response, 6, 1),  /* is patron status updating by the SC allowed ? (status update ok)*/
         'Offline'           => substr($response, 7, 1),
         'Timeout'           => substr($response, 8, 3),

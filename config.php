@@ -1,5 +1,9 @@
 <?php
-$sipHost ="0.0.0.0";
+$sipHost ="127.0.0.1";
 $sipPort = "6001";
+$sipUser = "koha-sc";
+$sipPassword = "KohaSCPassword123";
+$maxFine = 5;
 //OPAC URL with out the forward slash
-$opacURL = "https://catalog.example.com";
+$opacURL = "http://ils-opac-warrior";
+$adminURL = "https://admin.ils.cucawarriors.com";
