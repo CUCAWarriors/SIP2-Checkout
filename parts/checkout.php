@@ -10,7 +10,6 @@ $patronLoans = $patronLoans["loans"];
 
 ?>
 
-
 <div class="container">
     <div class="row profile">
 		<div class="col-md-3">
