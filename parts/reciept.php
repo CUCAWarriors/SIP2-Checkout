@@ -96,3 +96,12 @@ You Owe <b>$<?php echo $_SESSION['patronFines'];?></b> in fines and fees
 <hr>
 <i>Visit us online at<br>
 <?php echo $webAddress ?></i>
+
+
+<script type="text/javascript">
+<!--
+window.print();       
+document.location.href = "?killsession";
+//-->
+</script>
+
